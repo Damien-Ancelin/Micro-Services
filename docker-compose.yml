@@ -1,0 +1,45 @@
+services:
+  # ? Service Principal de l'app
+  bsn-main:
+    container_name: bsn-main
+    build:
+      context: ./main
+      dockerfile: Dockerfile.main
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    volumes:
+      - ./main:/app
+      - /app/node_modules
+    depends_on:
+      - bsn-api-users
+
+  # ? µService d'accès unique à la bdd
+  bsn-api-users:
+    container_name: bsn-api-users
+    build:
+      context: ./api-users
+      dockerfile: Dockerfile.apiUsers
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env
+    volumes:
+      - ./api-users:/app
+      - /app/node_modules
+    depends_on:
+      - bsn-db-users
+
+  # ? bdd users mongoDB
+  bsn-db-users:
+    container_name: bsn-db-users
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./data/seedingUsers.js:/docker-entrypoint-initdb.d/seedingUsers.js
+      - /data/bd

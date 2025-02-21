@@ -1,0 +1,41 @@
+<section class="users">
+  <h2 class="users__title">Liste des utilisateurs</h2>
+
+    <div class="users__table-container">
+        <table class="users__table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Description</th>
+                    <th>Rôle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.users.forEach(user => { %>
+                    <tr>
+                        <td><%= user.lastname %></td>
+                        <td><%= user.firstname %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.description %></td>
+                        <td><%= user.role_id === 1 ? 'Admin' : 'Utilisateur' %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</section>
+<div class="page-container">
+  <h2>Liste des utilisateurs en JSON</h2>
+
+  <section class="json-info">
+      <p>
+          Voici la représentation JSON des données sur les utilisateurs.
+      </p>
+  </section>
+
+  <div class="json-display">
+      <pre><%= JSON.stringify(data.users, null, 2) %></pre>
+  </div>
+</div>
