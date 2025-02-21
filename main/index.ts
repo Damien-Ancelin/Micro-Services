@@ -3,6 +3,7 @@ import path from 'node:path';
 import cookieParser from 'cookie-parser';
 
 import { homeRouter } from './src/routes/homeRouter';
+import { authRouter } from './src/routes/authRouter';
 
 const PORT = 3000;
 const app = express();
@@ -17,11 +18,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// homeRouter
-app.use(homeRouter)
+// * Role: Afficher des datas, interagir avec les cookies
 
-// TODO Créer route données JSON => data bdd GET
-// ? Idem
+// homeRouter
+app.use(homeRouter);
+
+// authRouter
+app.use(authRouter);
 
 // TODO Créer les routes auth 
 // ! ?

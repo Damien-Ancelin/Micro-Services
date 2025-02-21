@@ -14,6 +14,7 @@ services:
       - /app/node_modules
     depends_on:
       - bsn-api-users
+      - bsn-auth
 
   # ? µService d'accès unique à la bdd
   bsn-api-users:
@@ -30,6 +31,22 @@ services:
       - /app/node_modules
     depends_on:
       - bsn-db-users
+
+  # ? µServices d'authentication
+  bsn-auth:
+    container_name: bsn-auth
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile.auth
+    ports:
+      - "3002:3000"
+    env_file:
+      - .env
+    volumes:
+      - ./auth-service:/app
+      - /app/node_modules
+    depends_on:
+      - bsn-api-users
 
   # ? bdd users mongoDB
   bsn-db-users:

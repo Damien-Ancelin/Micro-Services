@@ -26,16 +26,5 @@
         </table>
     </div>
 </section>
-<div class="page-container">
-  <h2>Liste des utilisateurs en JSON</h2>
-
-  <section class="json-info">
-      <p>
-          Voici la représentation JSON des données sur les utilisateurs.
-      </p>
-  </section>
-
-  <div class="json-display">
-      <pre><%= JSON.stringify(data.users, null, 2) %></pre>
-  </div>
+<%- include('json') %>
 </div>

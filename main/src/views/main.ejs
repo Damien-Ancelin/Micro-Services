@@ -18,5 +18,11 @@
   <% if (data.users) { %>
     <%- include('users') %>
   <% } %>
+  <% if (data.login) { %>
+    <%- include('auth/login') %>
+  <% } %>
+  <% if (data.register) { %>
+    <%- include('auth/register') %>
+  <% } %>
 </body>
 </html>

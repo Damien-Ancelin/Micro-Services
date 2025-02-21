@@ -5,13 +5,13 @@ const apiUsersURL=process.env.API_USERS_URL as string;
 
 export const homeController = {
   homePage(req: Request, res: Response){
-    res.render("main", {data: {view: "home"}})
+    res.status(200).render("main", {data: {view: "home"}})
   },
   async users(req: Request, res: Response){
     try {
       const response = await axios.get(apiUsersURL);
       const users = response.data;
-      res.render("main", {data: {users: users}})
+      res.status(200).render("main", {data: {users: users}})
       
     } catch (error) {
       const errorMessage = error instanceof Error

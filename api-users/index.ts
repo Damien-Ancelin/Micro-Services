@@ -6,10 +6,9 @@ const PORT = 3000;
 
 const app = express();
 
-app.use(router);
+// * Role: interagir avec la bdd
 
-// TODO Créer connexion bdd + gestion on once
-// Todo schema + Model
+app.use(router);
 
 app.listen(PORT, () => {
   "🚀 server listen on http://localhost:3001"

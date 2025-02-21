@@ -1,23 +1,32 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Se connecter</title>
-</head>
-<body>
-  <h1>Connexion</h1>
-    <section>
-      <form action="/login" method="POST">
-        <label for="email">E-mail</label>
-        <input id="email" name="email" type="email" placeholder="email@domaine.com">
+<div class="auth-container">
+  <div class="auth-card">
+      <div class="auth-header">
+          <h2>Connexion</h2>
+      </div>
+      <div class="auth-body">
+          <% if (locals.error) { %>
+              <div class="error-message">
+                  <%= error %>
+              </div>
+          <% } %>
 
-        <label for="password">Password</label>
-        <input id="password" name="password" type="password" placeholder="password">
+          <form action="/login" method="POST" class="auth-form">
+              <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" required>
+              </div>
 
-        <button type="submit">Se connecter</button>
-      </form>
-    </section>
+              <div class="form-group">
+                  <label for="password">Mot de passe</label>
+                  <input type="password" id="password" name="password" required>
+              </div>
 
-</body>
-</html>
+              <button type="submit">Se connecter</button>
+          </form>
+
+          <div class="auth-footer">
+              <p>Pas encore de compte ? <a href="/register">S'inscrire</a></p>
+          </div>
+      </div>
+  </div>
+</div>
