@@ -9,7 +9,7 @@ export const homeController = {
   },
   async users(req: Request, res: Response){
     try {
-      const response = await axios.get(apiUsersURL);
+      const response = await axios.get(`${apiUsersURL}/users`);
       const users = response.data;
       res.status(200).render("main", {data: {users: users}})
       

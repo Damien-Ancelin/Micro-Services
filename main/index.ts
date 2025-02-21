@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 
 import { homeRouter } from './src/routes/homeRouter';
 import { authRouter } from './src/routes/authRouter';
+import { getAuthToken } from './src/middlewares/getAuthToken';
 
 const PORT = 3000;
 const app = express();
@@ -19,6 +20,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // * Role: Afficher des datas, interagir avec les cookies
+
+// Middleware pour extraire le token et le passer aux vues
+app.use(getAuthToken);
 
 // homeRouter
 app.use(homeRouter);

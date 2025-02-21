@@ -13,16 +13,10 @@
     <%- include('error') %>
   <% } %>
   <% if (data.view) { %>
-    <%- include('home') %>
+    <%- include(`${data.view}.ejs`) %>
   <% } %>
   <% if (data.users) { %>
     <%- include('users') %>
-  <% } %>
-  <% if (data.login) { %>
-    <%- include('auth/login') %>
-  <% } %>
-  <% if (data.register) { %>
-    <%- include('auth/register') %>
   <% } %>
 </body>
 </html>
