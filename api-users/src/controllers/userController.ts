@@ -16,7 +16,6 @@ export const userController = {
   async getOneUser(req: Request, res: Response){
     try {
       const email = req.params.email;
-      console.log(email);
       if(!email){
         res.status(400).json({ error: "Paramètres attendu introuvable" });
         return;

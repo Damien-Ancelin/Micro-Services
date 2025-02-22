@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import { homeRouter } from './src/routes/homeRouter';
 import { authRouter } from './src/routes/authRouter';
 import { getAuthToken } from './src/middlewares/getAuthToken';
+import { checkAuthToken } from './src/middlewares/checkAuthToken';
 
 const PORT = 3000;
 const app = express();
@@ -23,6 +24,9 @@ app.use(cookieParser());
 
 // Middleware pour extraire le token et le passer aux vues
 app.use(getAuthToken);
+
+// Middleware de vérification des droits du token
+app.use(checkAuthToken);
 
 // homeRouter
 app.use(homeRouter);

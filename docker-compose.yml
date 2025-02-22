@@ -15,6 +15,8 @@ services:
     depends_on:
       - bsn-api-users
       - bsn-auth
+      - bsn-permission
+      - bsn-acl
 
   # ? µService d'accès unique à la bdd
   bsn-api-users:
@@ -32,7 +34,7 @@ services:
     depends_on:
       - bsn-db-users
 
-  # ? µServices d'authentication
+  # ? µService d'authentication
   bsn-auth:
     container_name: bsn-auth
     build:
@@ -47,6 +49,38 @@ services:
       - /app/node_modules
     depends_on:
       - bsn-api-users
+
+  # ? µService permission / authorization
+  bsn-permission:
+    container_name: bsn-permission
+    build:
+      context: ./permission-service
+      dockerfile: Dockerfile.authz
+    ports:
+      - "3003:3000"
+    env_file:
+      - .env
+    volumes:
+      - /app/node_modules
+      - ./permission-service:/app
+    depends_on:
+      - bsn-auth
+
+  # ? µService ACL
+  bsn-acl:
+    container_name: bsn-acl
+    build:
+      context: ./acl-service
+      dockerfile: Dockerfile.acl
+    ports:
+      - "3004:3000"
+    env_file:
+      - .env
+    volumes:
+      - /app/node_modules
+      - ./acl-service:/app
+    depends_on:
+      - bsn-permission
 
   # ? bdd users mongoDB
   bsn-db-users:
