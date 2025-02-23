@@ -5,7 +5,8 @@ import cookieParser from 'cookie-parser';
 import { homeRouter } from './src/routes/homeRouter';
 import { authRouter } from './src/routes/authRouter';
 import { getAuthToken } from './src/middlewares/getAuthToken';
-import { checkAuthToken } from './src/middlewares/checkAuthToken';
+import { checkRoutePermission } from './src/middlewares/checkRoutePermission';
+import { isAdminMW } from './src/middlewares/isAdminMW';
 
 const PORT = 3000;
 const app = express();
@@ -26,7 +27,10 @@ app.use(cookieParser());
 app.use(getAuthToken);
 
 // Middleware de vérification des droits du token
-app.use(checkAuthToken);
+app.use(checkRoutePermission);
+
+// Middleware de vérification admin
+app.use(isAdminMW);
 
 // homeRouter
 app.use(homeRouter);

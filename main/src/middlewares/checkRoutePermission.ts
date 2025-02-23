@@ -3,11 +3,10 @@ import axios from "axios";
 
 const aclURL = process.env.ACL_SERVICE_URL as string;
 
-export const checkAuthToken = async(req: Request, res: Response, next: NextFunction) => {
+export const checkRoutePermission = async(req: Request, res: Response, next: NextFunction) => {
   try {
     // On appelle le microservice acl-service avec axios pour vérifier les autorisations
     const token = `Bearer ${res.locals.bsn_auth_token}`;
-    console.log(token);
 
     await axios.post(`${aclURL}/acl`, { method: req.method, path: req.path }, {
     headers: {

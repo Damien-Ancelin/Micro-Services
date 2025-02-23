@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const apiUsersURL=process.env.API_USERS_URL as string;
 const apiPostsURL=process.env.API_POSTS_URL as string;
+const permissionURL=process.env.PERMISSION_SERVICE_URL as string;
 
 export const homeController = {
   homePage(req: Request, res: Response){
@@ -13,6 +14,7 @@ export const homeController = {
     try {
       const response = await axios.get(`${apiUsersURL}/users`);
       const users = response.data;
+
       res.status(200).render("main", {data: {users: users}})
       
     } catch (error) {

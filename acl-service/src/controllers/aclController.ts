@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { routeConfig } from "../utils/acl";
+import { routeConfig } from "../../utils/acl";
 import axios from "axios";
 
 const authzURL = process.env.PERMISSION_SERVICE_URL as string;

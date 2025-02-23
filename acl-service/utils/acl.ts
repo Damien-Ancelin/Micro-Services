@@ -1,4 +1,4 @@
-import type { TRouteConfig  } from "../../@types";
+import type { TRouteConfig  } from "../@types";
 
 enum Role {
   ADMIN = 1,

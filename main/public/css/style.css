@@ -259,3 +259,25 @@ overflow-x: auto;
 .auth-footer a:hover {
   text-decoration: underline;
 }
+
+/* * --------------------------- FEED ---------------------------*/
+.feed{
+  margin-bottom: 2rem;
+}
+.feed__title{
+  margin-bottom: 2rem;
+}
+.feed__container{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.feed__card{
+  border: 2px solid var(--main-color);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+.card__image{
+  padding: 1rem;
+}

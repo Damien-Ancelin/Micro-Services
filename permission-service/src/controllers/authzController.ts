@@ -26,5 +26,19 @@ export const authzController = {
         res.status(401).json({error: `Erreur dans le Authz => ${error.message}`})
       }
     }
-  }
+  },
+
+  checkAdmin(req: Request, res: Response){
+    try {
+      const bearerToken  = req.headers.authorization as string;
+      const token = bearerToken?.split(" ")[1] as string;
+      const tokenData = jwt.verify(token, jwtSecret) as JWTUserData;
+  
+      res.status(200).json({ isAdmin: tokenData.role === 1 })
+    } catch (error) {
+      if(error instanceof Error){
+        res.status(401).json({error: `Erreur dans le Authz => ${error.message}`})
+      }
+    }
+  },
 }
