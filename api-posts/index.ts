@@ -1,5 +1,8 @@
 import express from 'express';
+
 import type { Request, Response } from 'express';
+
+import { router } from './src/routes/routes';
 
 const PORT = 3000;
 
@@ -13,6 +16,7 @@ app.get("/", (req: Request, res: Response) => {
 })
 
 // * Role: interagir avec la bdd posts
+app.use(router)
 
 app.listen(PORT, () => {
   "🚀 server listen on http://localhost:3005"

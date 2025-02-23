@@ -9,4 +9,8 @@ export const routeConfig = {
   "/users": {
     "GET" : [Role.ADMIN, Role.USER]
   },
+  
+  "/posts": {
+    "GET": [Role.ADMIN, Role.USER]
+  },
 } as TRouteConfig;

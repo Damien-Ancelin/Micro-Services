@@ -1,13 +1,13 @@
 import type { Request, Response } from "express";
 import UserModel from "../models/User";
-import type { UserInBdd, UserOutOfBdd } from "../../@types";
+import type { UserInBdd } from "../../@types";
 
 const errorConnexion = "Connexion échouée, veuillez réessayer.";
 
 export const userController = {
   async getAllUsers(req: Request, res: Response){
     try {
-      const users: UserOutOfBdd[] = await UserModel.find();
+      const users: UserInBdd[] = await UserModel.find();
       res.status(200).json(users);
     } catch (error) {
       res.status(500).json({ error: "Une erreur est survenue" });
@@ -21,7 +21,7 @@ export const userController = {
         res.status(400).json({ error: "Paramètres attendu introuvable" });
         return;
       }
-      const user: UserOutOfBdd | null = await UserModel.findOne({ email });
+      const user: UserInBdd | null = await UserModel.findOne({ email });
 
       if (!user) {
         res.status(404).json({ error: "Utilisateur non trouvé" });

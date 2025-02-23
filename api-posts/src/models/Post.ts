@@ -12,5 +12,5 @@ const postSchema = new mongoose.Schema<PostOutOfBdd>({
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
 });
 
-const PostModel = db.model("User", postSchema);
+const PostModel = db.model("Post", postSchema);
 export default PostModel;

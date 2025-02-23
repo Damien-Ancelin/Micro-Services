@@ -5,3 +5,4 @@ export const homeRouter = Router();
 
 homeRouter.get("/", homeController.homePage);
 homeRouter.get('/users', homeController.users);
+homeRouter.get("/posts", homeController.feed)
