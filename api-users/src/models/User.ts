@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import db from "./mongoose";
+import type { UserOutOfBdd } from "../../@types";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema<UserOutOfBdd>({
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
   email: { type: String, required: true, unique: true },

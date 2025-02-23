@@ -1,6 +1,5 @@
 import express from 'express';
 import type { Request, Response } from 'express';
-import { router } from './src/routes/routes';
 
 const PORT = 3000;
 
@@ -10,12 +9,11 @@ app.use(express.json());
 
 // Route d'accueil
 app.get("/", (req: Request, res: Response) => {
-  res.send("Bienvenue sur api-users")
+  res.send("Bienvenue sur api-posts")
 })
 
-// * Role: interagir avec la bdd users
-app.use(router);
+// * Role: interagir avec la bdd posts
 
 app.listen(PORT, () => {
-  "🚀 server listen on http://localhost:3001"
+  "🚀 server listen on http://localhost:3005"
 });

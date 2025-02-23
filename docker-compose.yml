@@ -18,7 +18,7 @@ services:
       - bsn-permission
       - bsn-acl
 
-  # ? µService d'accès unique à la bdd
+  # ? µService d'accès unique à la bdd users !
   bsn-api-users:
     container_name: bsn-api-users
     build:
@@ -82,6 +82,22 @@ services:
     depends_on:
       - bsn-permission
 
+  # ? µService d'accès unique à la bdd posts !
+  bsn-api-posts:
+    container_name: bsn-api-posts
+    build:
+      context: ./api-posts
+      dockerfile: Dockerfile.apiPosts
+    ports:
+      - "3005:3000"
+    env_file:
+      - .env
+    volumes:
+      - ./api-posts:/app
+      - /app/node_modules
+    depends_on:
+      - bsn-db-posts
+
   # ? bdd users mongoDB
   bsn-db-users:
     container_name: bsn-db-users
@@ -90,7 +106,20 @@ services:
       - "27017:27017"
     restart: always
     env_file:
-      - .env
+      - .env.users
     volumes:
       - ./data/seedingUsers.js:/docker-entrypoint-initdb.d/seedingUsers.js
-      - /data/bd
+      - /data/bd_users
+
+  # ? bdd posts mongoDB
+  bsn-db-posts:
+    container_name: bsn-db-posts
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    restart: always
+    env_file:
+      - .env.posts
+    volumes:
+      - ./data/seedingPosts.js:/docker-entrypoint-initdb.d/seedingPosts.js
+      - /data/bd_posts

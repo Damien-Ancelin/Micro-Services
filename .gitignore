@@ -1,2 +1,4 @@
 .env
+.env.users
+.env.posts
 node_modules/
