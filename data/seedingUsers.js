@@ -30,4 +30,22 @@ db.users.insertMany([
         image: "https://static.wikia.nocookie.net/les-miserables/images/2/2b/Marius.jpg/revision/latest?cb=20161217082128&path-prefix=fr",
         role_id: 2,
     },
+    {
+        firstname: "lol",
+        lastname: "lilol",
+        email: "jacob@pontmercy.fr",
+        password: "$2b$10$Z8iEoVVkWZa4mVxds4.Ti.ZquuOetvT8.dwA.VL.TqTiyLi1yRCou",
+        description: "Je suis le chien de Cosette",
+        image: "https://static.wikia.nocookie.net/les-miserables/images/2/2b/Marius.jpg/revision/latest?cb=20161217082128&path-prefix=fr",
+        role_id: 2,
+    },
+    {
+        firstname: "Marius",
+        lastname: "Pontmercy",
+        email: "richard@pontmercy.fr",
+        password: "$2b$10$Z8iEoVVkWZa4mVxds4.Ti.ZquuOetvT8.dwA.VL.TqTiyLi1yRCou",
+        description: "Je suis le mari de lolilol",
+        image: "https://static.wikia.nocookie.net/les-miserables/images/2/2b/Marius.jpg/revision/latest?cb=20161217082128&path-prefix=fr",
+        role_id: 2,
+    },
 ]);

@@ -14,9 +14,30 @@ services:
       - /app/node_modules
     depends_on:
       - bsn-api-users
+      - bsn-api-posts
       - bsn-auth
       - bsn-permission
       - bsn-acl
+
+  # ? Service de Composition de l'app
+  bsn-composition:
+    container_name: bsn-composition
+    build:
+      context: ./api-composition
+      dockerfile: Dockerfile.compo
+    ports:
+      - "3006:3000"
+    env_file:
+      - .env
+    volumes:
+      - ./api-composition:/app
+      - /app/node_modules
+    depends_on:
+      - bsn-api-users
+      - bsn-auth
+      - bsn-permission
+      - bsn-acl
+      - bsn-api-posts
 
   # ? µService d'accès unique à la bdd users !
   bsn-api-users:
@@ -98,6 +119,20 @@ services:
     depends_on:
       - bsn-db-posts
 
+  # ? µService de logger sur api-users & api-posts !
+  bsn-log-api:
+    container_name: bsn-log-api
+    build:
+      context: ./log-api
+      dockerfile: Dockerfile.apilog
+    env_file:
+      - .env
+    volumes:
+      - ./log-api:/app
+      - /app/node_modules
+    depends_on:
+      - bsn-redis
+
   # ? bdd users mongoDB
   bsn-db-users:
     container_name: bsn-db-users
@@ -123,3 +158,10 @@ services:
     volumes:
       - ./data/seedingPosts.js:/docker-entrypoint-initdb.d/seedingPosts.js
       - /data/bd_posts
+
+  # ? Server Redis
+  bsn-redis:
+    container_name: bsn-redis
+    image: redis:latest
+    ports:
+      - "6379:6379"

@@ -23,9 +23,6 @@
                         <td><%= user.email %></td>
                         <td><%= user.description %></td>
                         <td><%= user.role_id === 1 ? 'Admin' : 'Utilisateur' %></td>
-                        <% if (locals.isAdmin) { %>
-                          <td><button>Modifier</button></td>
-                        <% } %>
                     </tr>
                 <% }); %>
             </tbody>

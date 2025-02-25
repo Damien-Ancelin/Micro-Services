@@ -11,9 +11,6 @@
           <h2 class="card__title"><%= post.title %></h2>
           <p class="card__body"><%= post.body %></p>
           <em>de: <%= post.user_id %></em><br />
-          <% if (locals.isAdmin) { %>
-            <button type="button">Modifier</button>
-          <% } %>
         </div>
       </article>
     <% }); %>

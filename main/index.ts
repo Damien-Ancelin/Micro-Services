@@ -6,7 +6,6 @@ import { homeRouter } from './src/routes/homeRouter';
 import { authRouter } from './src/routes/authRouter';
 import { getAuthToken } from './src/middlewares/getAuthToken';
 import { checkRoutePermission } from './src/middlewares/checkRoutePermission';
-import { isAdminMW } from './src/middlewares/isAdminMW';
 
 const PORT = 3000;
 const app = express();
@@ -29,17 +28,11 @@ app.use(getAuthToken);
 // Middleware de vérification des droits du token
 app.use(checkRoutePermission);
 
-// Middleware de vérification admin
-app.use(isAdminMW);
-
 // homeRouter
 app.use(homeRouter);
 
 // authRouter
 app.use(authRouter);
-
-// TODO Créer les routes auth 
-// ! ?
 
 app.listen(PORT, () => {
   `server listen on http://localhost:${PORT}`

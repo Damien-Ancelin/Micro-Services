@@ -1,16 +1,27 @@
 import type { Request, Response } from "express";
-import UserModel from "../models/User";
 import type { UserInBdd } from "../../@types";
 
-const errorConnexion = "Connexion échouée, veuillez réessayer.";
+import UserModel from "../models/User";
+import redisClient from "../../redis";
+import { cacheOptions } from "../../redis";
 
 export const userController = {
   async getAllUsers(req: Request, res: Response){
     try {
+      
       const users: UserInBdd[] = await UserModel.find();
+      await redisClient.publish('logs', `Données récupérées dans la BDD ${req.url}`);
+      await redisClient.set(req.url, JSON.stringify(users), cacheOptions);
+
       res.status(200).json(users);
+
     } catch (error) {
-      res.status(500).json({ error: "Une erreur est survenue" });
+      if(error instanceof Error){
+        await redisClient.publish('logs', `Error pour: ${req.route.path} / ${error.message}`);
+        res.status(404).json({ error: "Une erreur est survenue" });
+      } else {
+        res.status(500).json({ error: "Une erreur est survenue" });
+      }
     }
   },
 
@@ -30,7 +41,12 @@ export const userController = {
 
       res.status(200).json(user);
     } catch (error) {
-      res.status(500).json({ error: "Une erreur est survenue" });
+      if(error instanceof Error){
+        await redisClient.publish('logs', `Error pour: ${req.route.path} / ${error.message}`);
+        res.status(404).json({ error: "Une erreur est survenue" });
+      } else {
+        res.status(500).json({ error: "Une erreur est survenue" });
+      }
     }
   },
 
@@ -54,12 +70,76 @@ export const userController = {
         description: description ?? "C'est moi, je suis nouveau sur BSN",
         role_id: role_id
       });
-
       const createdUser = await newUser.save();
-      res.status(201).json(createdUser)
+
+      const cachedData = await redisClient.get("/users");
+        if (cachedData) {
+            const users = JSON.parse(cachedData);
+            users.push(createdUser);
+            await redisClient.set("/users", JSON.stringify(users), cacheOptions);
+        }
+
+        res.status(201).json(createdUser);
 
     } catch (error) {
-      res.status(500).json({ error: "Une erreur est survenue" });
-  }
-  }
+      if(error instanceof Error){
+        await redisClient.publish('logs', `Error pour: ${req.route.path} / ${error.message}`);
+        res.status(404).json({ error: "Une erreur est survenue" });
+      } else {
+        res.status(500).json({ error: "Une erreur est survenue" });
+      }
+    }
+  },
+   async deleteUser(req: Request, res: Response){
+    try {
+      const email = req.params.email;
+      const deletedUser = await UserModel.findOneAndDelete({ email });
+      const cachedData = await redisClient.get('/users');
+
+      if (cachedData) {
+          const users = JSON.parse(cachedData).filter((user: UserInBdd) => user.email !== deletedUser?.email) as UserInBdd[];
+          await redisClient.publish('logs', `${deletedUser?.email}`);
+          await redisClient.set('/users', JSON.stringify(users), cacheOptions);
+        }
+
+      res.sendStatus(204);
+
+    } catch (error) {
+      if(error instanceof Error){
+        await redisClient.publish('logs', `Error pour: ${req.route.path} / ${error.message}`);
+        res.status(404).json({ error: "Une erreur est survenue" });
+      } else {
+        res.status(500).json({ error: "Une erreur est survenue" });
+      }
+    }
+   },
+
+   async updateUser (req: Request, res: Response){
+    try {
+        const email = req.params.email;
+
+        try {
+            const updateUser = await UserModel.findOneAndUpdate({ email }, req.body);
+            const cachedData = await redisClient.get('/users');
+
+            if (cachedData) {
+              const users = JSON.parse(cachedData).filter((user: UserInBdd) => user.email !== updateUser?.email);
+              users.push(updateUser);
+              await redisClient.set('/users', JSON.stringify(users), cacheOptions);
+            }
+
+
+            res.status(200).json(updateUser);
+        } catch (error) {
+            res.status(404).json({ error: "Utilisateur non trouvé" });
+        }
+      } catch (error) {
+        if(error instanceof Error){
+          await redisClient.publish('logs', `Error pour: ${req.route.path} / ${error.message}`);
+          res.status(404).json({ error: "Une erreur est survenue" });
+        } else {
+          res.status(500).json({ error: "Une erreur est survenue" });
+        }
+      }
+   },
 }

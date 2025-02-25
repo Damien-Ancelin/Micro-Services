@@ -1,7 +1,6 @@
 import express from 'express';
 import type { Request, Response } from 'express';
-import { router } from './src/routes/routes';
-import { cacheMiddleware } from './src/middleware/cacheMiddleware';
+import { usersRouter } from './src/routes/usersRoutes';
 
 const PORT = 3000;
 
@@ -11,12 +10,12 @@ app.use(express.json());
 
 // Route d'accueil
 app.get("/", (req: Request, res: Response) => {
-  res.send("Bienvenue sur api-users")
-});
+  res.send("Bienvenue sur api-composition")
+})
 
-// * Role: interagir avec la bdd users
-app.use(router);
+// * Logique centralisé des µServices pour envoyé datas au main
+app.use(usersRouter);
 
 app.listen(PORT, () => {
-  "🚀 server listen on http://localhost:3001"
+  "🚀 server listen on http://localhost:3006"
 });
