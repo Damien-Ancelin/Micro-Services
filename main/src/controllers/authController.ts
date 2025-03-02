@@ -27,12 +27,9 @@ export const authController = {
   
   async handleRegister(req: Request, res: Response){
     try {
-      // TODO requete axios vers /register auth-services
       const response = await axios.post(`${authURL}/register`, req.body)
-      // TODO Récupérer le token et le mettre dans les cookies
       const { token } = response.data;
       res.cookie('bsn_auth_token', token);
-      // TODO Redirect page d'acceuil !
       res.redirect("/");
     } catch (error) {
       res.status(500).json({ error: "Une erreur est survenue" });

@@ -1,0 +1,42 @@
+<div class="auth-container">
+  <div class="auth-card">
+      <div class="auth-header">
+          <h2>Modifier l'utilisateur</h2>
+      </div>
+      <div class="auth-body">
+          <form method="POST" class="auth-form">
+              <input type="hidden" name="_method" value="PUT">
+
+              <div class="form-group">
+                  <label for="firstname">Prénom</label>
+                  <input type="text" id="firstname" name="firstname" value="<%= data.user.firstname %>" required>
+              </div>
+
+              <div class="form-group">
+                  <label for="lastname">Nom</label>
+                  <input type="text" id="lastname" name="lastname" value="<%= data.user.lastname %>" required>
+              </div>
+
+              <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea id="description" name="description"><%= data.user.description %></textarea>
+              </div>
+
+              <div class="form-group">
+                  <label for="role_id">Rôle</label>
+                  <select id="role_id" name="role_id" required>
+                      <option value="2" <%= data.user.role_id === 2 ? 'selected' : '' %>>Utilisateur</option>
+                      <option value="1" <%= data.user.role_id === 1 ? 'selected' : '' %>>Admin</option>
+                  </select>
+              </div>
+
+              <div class="required-fields">Les champs marqués d'un * sont obligatoires</div>
+
+              <button type="submit">Enregistrer</button>
+          </form>
+          <div class="auth-footer">
+              <a href="/users">Retour à la liste des utilisateurs</a>
+          </div>
+      </div>
+  </div>
+</div>

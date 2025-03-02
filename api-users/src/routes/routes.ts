@@ -9,4 +9,4 @@ router.get('/users', cacheMiddleware, userController.getAllUsers);
 router.get('/user/:email', userController.getOneUser);
 router.post('/user', userController.createUser);
 router.delete('/user/:email', userController.deleteUser);
-router.patch('/user/:updateUser', userController.updateUser);
+router.patch('/user/:email', userController.updateUser);

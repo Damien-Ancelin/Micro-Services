@@ -31,7 +31,7 @@ export const userController = {
         res.status(401).json({error: errorConnexion });
       }
 
-      const token = createToken({ id: user._id, role: user.role_id, email: user.email })
+      const token = createToken({ id: user._id, role: user.role_id, email: user.email });
 
       res.status(201).json({token, user});
     } catch (error) {
@@ -57,7 +57,7 @@ export const userController = {
       const response = await axios.post(`${apiUsersURL}/user`, {...validation})
       const newUser = response.data;
       const token = createToken({ id: newUser._id, role: newUser.role_id, email: newUser.email })
-      res.status(201).json({token, newUser});
+      res.status(201).json({token, user: newUser});
 
     } catch (error) {
       if (error instanceof Error) {

@@ -7,7 +7,8 @@ const permissionURL=process.env.PERMISSION_SERVICE_URL as string;
 
 export const homeController = {
   homePage(req: Request, res: Response){
-    res.status(200).render("main", {data: {view: "home"}})
+    res.status(200).render("main", {data: {view: "home"}});
+    console.log(res.locals);
   },
 
   async users(req: Request, res: Response){

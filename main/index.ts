@@ -6,6 +6,9 @@ import { homeRouter } from './src/routes/homeRouter';
 import { authRouter } from './src/routes/authRouter';
 import { getAuthToken } from './src/middlewares/getAuthToken';
 import { checkRoutePermission } from './src/middlewares/checkRoutePermission';
+import { whoIs } from './src/middlewares/whoIs';
+import { userController } from './src/controllers/userController';
+import { userRouter } from './src/routes/userRouter';
 
 const PORT = 3000;
 const app = express();
@@ -28,11 +31,15 @@ app.use(getAuthToken);
 // Middleware de vérification des droits du token
 app.use(checkRoutePermission);
 
+// Middleware de vérification de qui est l'utilisateur
+app.use(whoIs);
+
 // homeRouter
 app.use(homeRouter);
-
 // authRouter
 app.use(authRouter);
+//userController
+app.use(userRouter);
 
 app.listen(PORT, () => {
   `server listen on http://localhost:${PORT}`
